@@ -1,0 +1,8 @@
+/.lein-repl-history
+/.nrepl-port
+.DS_STORE
+/.idea
+*.iml
+/static
+/target
+/bower_components
