@@ -10,3 +10,12 @@ of Clojure, so I welcome feedback and contributions from all.
 Of course, this is just one possible combination of technologies and is definitely not a one-size-fits-all stack.
 However, any feedback on how to better embody Clojure(Script)/Datomic/Compojure/Om/Leiningen "best practices" are
 especially welcome.
+
+##Overview of Technologies Used
+TBD
+
+##Quickstart with Datomic Free/Starter
+TBD
+
+##Building and Running
+TBD
