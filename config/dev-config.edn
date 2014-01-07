@@ -1,0 +1,1 @@
+{:datomic-uri "datomic:free://localhost:4334/test"}

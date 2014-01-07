@@ -3,22 +3,22 @@
             [ring.middleware.format :refer [wrap-restful-format]]
             [compojure.response :as response]
             [datomic.api :as d :refer [db q]]
-            [compojure.core :refer [GET defroutes]]))
+            [compojure.core :refer [GET defroutes]]
+            [dcom.config :refer [read-config]]))
 
-;(def conn
-;  (d/connect "datomic:dev://localhost:4334/test"))
+(def conn
+  (d/connect (:datomic-uri (read-config))))
 
-;(defn get-message []
-;  (mapv first (q '[:find ?n :where [?e :drawing/name ?n]] (db conn))))
+(defn get-datomic-message []
+  (ffirst (q '[:find ?m :where [?e :demo/message ?m]] (db conn))))
 
 (defroutes handler
-           (GET "/" [] {:body {:foo :bar :baz :qux}}))
+           (GET "/" [] {:body {:compojure-message (str (get-datomic-message) ", Compojure")}}))
 
 (def app
   (-> handler
       (cors/wrap-cors
         :access-control-allow-origin #"http://localhost:8000"
-        :access-control-allow-methods ["GET" "POST" "DELETE"]
-        :access-control-allow-headers ["Content-Type"]
-        :access-control-allow-credentials "true")
+        :access-control-allow-methods ["GET"]
+        :access-control-allow-headers ["Content-Type"])
       (wrap-restful-format :formats [:edn])))

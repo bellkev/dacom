@@ -1,6 +1,33 @@
 (ns dcom.db
-  "https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/schema.clj"
-  (:require [datomic.api :as d]))
+  "https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/io.clj
+   and
+   https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/schema.clj"
+  (:require [datomic.api :as d :refer [db q]]
+            [clojure.java.io :as io]
+            [dcom.config :refer [read-config]])
+  (:import datomic.Util))
+
+;===============================================================================
+; io utils
+;===============================================================================
+
+(defn read-all
+  "Read all forms in f, where f is any resource that can
+   be opened by io/reader"
+  [f]
+  (Util/readAll (io/reader f)))
+
+(defn transact-all
+  "Load and run all transactions from f, where f is any
+   resource that can be opened by io/reader."
+  [conn f]
+  (doseq [txd (read-all f)]
+    (d/transact conn txd))
+  :done)
+
+;===============================================================================
+; schema utils
+;===============================================================================
 
 (defn cardinality
   "Returns the cardinality (:db.cardinality/one or
@@ -62,8 +89,10 @@
   [conn schema-attr schema-map & schema-names]
   (ensure-schema-attribute conn schema-attr)
   (doseq [schema-name schema-names]
-    (when-not (has-schema? (d/db conn) schema-attr schema-name)
+    (if (has-schema? (d/db conn) schema-attr schema-name)
+      (println "Schema" schema-name "already installed")
       (let [{:keys [requires txes]} (get schema-map schema-name)]
+        (println "Installing schema" schema-name "...")
         (apply ensure-schemas conn schema-attr schema-map requires)
         (if txes
           (doseq [tx txes]
@@ -74,4 +103,32 @@
           (throw (ex-info (str "No data provided for schema" schema-name)
                           {:schema/missing schema-name})))))))
 
+;===============================================================================
+; install schema and sample data
+;===============================================================================
 
+(def db-uri (:datomic-uri (read-config)))
+
+(d/create-database db-uri)
+
+(def conn
+  (d/connect db-uri))
+
+(def schema-map (first (read-all "db-resources/schema.edn")))
+
+(defn install-schema []
+  (ensure-schemas conn :dcom/all-tx-tag schema-map :dcom/all))
+
+(defn install-message []
+  (let [result (q '[:find ?e :where [?e :demo/message]] (db conn))]
+    (if (ffirst result)
+      (println "Demo message already installed")
+      (do
+        (println "Installing demo message...")
+        (d/transact conn [{:db/id (d/tempid :db.part/user)
+                           :demo/message "Hello, from Datomic"}])))))
+
+(defn -main [& args]
+  (install-schema)
+  (install-message)
+  (System/exit 0))

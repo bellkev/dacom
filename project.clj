@@ -23,7 +23,7 @@
             [lein-resource "0.3.1"]
             [lein-httpd "1.0.0"]
             [lein-shell "0.3.0"]
-            [lein-lesscss "1.2"]]
+            [fsrun "0.1.2"]]
   :source-paths ["src"]
   :target-path "target/%s/"
   :omit-source true
@@ -38,16 +38,20 @@
   :ring {:handler dcom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
-  :profiles {:dev {:resource {:resource-paths ["pages"]
+  :profiles {:dev {:repl-options {:init-ns dcom.repl}
+                   :resource {:resource-paths ["pages"]
                               :target-path "static"
                               :extra-values {:scripts [{:src "../bower_components/react/react.js"}
                                                        {:src "js/goog/base.js"}
                                                        {:src "js/main.js"}
                                                        {:body "goog.require('dcom.client')"}]}}}
+             :db {:main dcom.db}
              :uberjar {:aot :all}}
   :aliases {"bower" ["shell" "bower" "install"]
             "less-debug" ~(conj less-cmd "--source-map")
             "less-prod" ~(conj less-cmd "--compress")
+            "watch-less" ["fschange" "stylesheets/*" "less-debug"]
+            "install-db" ["with-profile" "db" "run"]
             "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
             "run-server" ["ring" "server-headless"]}
   :clean-targets [:target-path :compile-path "static"])
