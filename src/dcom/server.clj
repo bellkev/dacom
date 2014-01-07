@@ -1,4 +1,4 @@
-(ns dcom.server.api
+(ns dcom.server
   (:require [ring.middleware.cors :as cors]
             [ring.middleware.format :refer [wrap-restful-format]]
             [compojure.response :as response]

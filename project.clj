@@ -1,11 +1,11 @@
 (def less-cmd
-  ["shell" "lessc" "client/stylesheets/style.less"
+  ["shell" "lessc" "stylesheets/style.less"
    "static/css/style.css"
    "--include-path=bower_components/bootstrap/less/"])
 
 (defproject dcom "0.1.0-SNAPSHOT"
   :description "A skeleton app built with datomic, compojure, and om"
-  :url "http://example.com/FIXME"
+  :url "https://github.com/bellkev/dcom"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-2138"]
                  [ring "1.2.1"]
@@ -24,26 +24,27 @@
             [lein-httpd "1.0.0"]
             [lein-shell "0.3.0"]
             [lein-lesscss "1.2"]]
-  :source-paths ["server/src"]
-  :cljsbuild {:builds {:dev {:source-paths ["client/scripts/src"]
+  :source-paths ["src"]
+  :target-path "target/%s/"
+  :omit-source true
+  :uberjar-exclusions [#"src/dcom/repl.clj" #"src/dcom/client.cljs" #"src/dcom/db.clj"
+                       #"src/dcom/resources/.*"]
+  :cljsbuild {:builds {:dev {:source-paths ["src"]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
                                         :optimizations :none
                                         :pretty-print true
                                         :source-map true}}}}
-  :ring {:handler dcom.server.api/app}
-  :lesscss-paths "client/stylesheets"
+  :ring {:handler dcom.server/app}
+  :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
-  :profiles {:db {:source-paths ["db/src"]}
-             :server {:source-paths ["server/src"]}
-             :pages {:injections [(def debug true)]}
-             :dev [:db :server {:source-paths ["repl/src"]
-                                :resource {:resource-paths ["client/pages"]
-                                           :target-path "static"
-                                           :extra-values {:scripts [{:src "../bower_components/react/react.js"}
-                                                                    {:src "js/goog/base.js"}
-                                                                    {:src "js/main.js"}
-                                                                    {:body "goog.require('dcom.client.app')"}]}}}]}
+  :profiles {:dev {:resource {:resource-paths ["pages"]
+                              :target-path "static"
+                              :extra-values {:scripts [{:src "../bower_components/react/react.js"}
+                                                       {:src "js/goog/base.js"}
+                                                       {:src "js/main.js"}
+                                                       {:body "goog.require('dcom.client')"}]}}}
+             :uberjar {:aot :all}}
   :aliases {"bower" ["shell" "bower" "install"]
             "less-debug" ~(conj less-cmd "--source-map")
             "less-prod" ~(conj less-cmd "--compress")

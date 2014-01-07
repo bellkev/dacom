@@ -1,9 +1,7 @@
-(ns dcom.client.app
+(ns dcom.client
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
             [ajax.core :as ajax]))
-
-(js/alert "Hello from cljs!")
 
 (defn widget [data]
   (om/component
