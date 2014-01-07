@@ -1,3 +1,6 @@
+;   Copyright (c) 2014 Kevin Bell. All rights reserved.
+;   See the file license.txt for copying permission.
+
 (ns dcom.db
   "https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/io.clj
    and
