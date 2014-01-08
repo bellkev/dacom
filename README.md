@@ -28,7 +28,7 @@ While Datomic are Compojure are fairly stable, [Om](https://github.com/swannodet
 Datomic has a number of editions, offers a number of language interfaces, and supports a number of storage back-ends, so its documentation can be a little overwhelming. However, you can get started with a basic setup by:
 
 * [Getting Datomic](http://www.datomic.com/get-datomic.html) (there are a couple of free options&mdash;this project is setup to use the "free" version)
-* Running `bin/transactor config/samples/free-transactor-template.properties` (this works fine as of version 0.9.4384)
+* Running `bin/transactor config/samples/free-transactor-template.properties` on the command line from within the unzipped datomic directory (this works fine as of version 0.9.4384)
 
 ##Building and Running
 Working with this version of the DACOM stack is a little more cumbersome than it ideally should be, mainly do to a lack of front-end oriented tools in the [Leiningen](http://leiningen.org) ecosystem. There are a few such tools out there, but they are generally simple shell-based wrappers around NodeJS-based tools, so I have instead simply included some convenience tasks to invoke those tools through Leiningen without additional plugins.
