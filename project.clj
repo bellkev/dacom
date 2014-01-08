@@ -30,9 +30,9 @@
   :source-paths ["src"]
   :target-path "target/%s/"
   :omit-source true
-  :uberjar-exclusions [#"src/dacom/repl.clj" #"src/dacom/client.cljs" #"src/dacom/db.clj"
-                       #"src/dacom/resources/.*"]
-  :cljsbuild {:builds {:dev {:source-paths ["src"]
+  :uberjar-exclusions [#".*\.cljs" #"src/dacom/db\.clj"]
+  :cljsbuild {:builds {:dev {:source-paths ["src" "repl/src"]
+                             :exclusions [dacom.repl]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
                                         :optimizations :none
@@ -41,13 +41,15 @@
   :ring {:handler dacom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
-  :profiles {:dev {:repl-options {:init-ns dacom.repl}
+  :profiles {:dev {:source-paths ["src" "repl/src"]
+                   :repl-options {:init-ns dacom.repl}
                    :resource {:resource-paths ["pages"]
                               :target-path "static"
                               :extra-values {:scripts [{:src "../bower_components/react/react.js"}
                                                        {:src "js/goog/base.js"}
                                                        {:src "js/main.js"}
-                                                       {:body "goog.require('dacom.client')"}]}}}
+                                                       {:body "goog.require('dacom.client')"}
+                                                       {:body "goog.require('dacom.repl')"}]}}}
              :db {:main dacom.db}
              :uberjar {:aot :all}}
   :aliases {"bower" ["shell" "bower" "install"]

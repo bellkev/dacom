@@ -7,24 +7,7 @@
             [om.dom :as dom :include-macros true]
             [sablono.core :as html :refer [html] :include-macros true]
             [cljs.core.async :as async :refer [chan <! put!]]
-            [ajax.core :as ajax]
-            [clojure.browser.repl]))
-
-;===============================================================================
-; for dev
-;===============================================================================
-
-(ajax/GET "http://localhost:8080"
-          {:handler (fn [response]
-                      (js/eval response)
-                      (.log js/console "Connected to Austin nREPL"))
-           :error-handler (fn [e]
-                            (.log js/console (str "Unable to connect to nREPL")))
-           :format (ajax/raw-format)})
-
-;===============================================================================
-; Om app
-;===============================================================================
+            [ajax.core :as ajax]))
 
 (def server-chan (chan))
 
