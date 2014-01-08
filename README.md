@@ -13,13 +13,25 @@ However, any feedback on how to better embody Clojure(Script)/Datomic/Compojure/
 especially welcome.
 
 ##Overview of Technologies Used
-(coming soon)
+This project uses a wide array of Clojure (and non-Clojure) libraries and tools to "glue" everything together and provide some development conveniences, but the main components of the DACOM (rhymes with "datom") stack are:
+
+####Datomic
+[Datomic](http://datomic.com) is a database that provides an entity-attribute-value model of data, can be queried with logic-based expressions (it does the equivalent of "joins" and such for you). Time is also a first-class citizen in Datomic. That is, it keeps a complete version history of the entire database, using structural sharing to reduce redundancy (like Clojure's own persistent data structures or the Git internals). Check out [day-of-datomic](https://github.com/Datomic/day-of-datomic) for a great guide to working with Datomic in Clojure.
+
+####Compojure
+[Compojure](https://github.com/weavejester/compojure) is a lightweight wrapper around [Ring](https://github.com/ring-clojure/ring), which itself is a wrapper around Java servlets. Ring is a very streamlined, data-driven library that allows you to define handlers for HTTP requests that can be easily wrapped/extended with a flexible "middleware" model. Compojure adds some additional routing conveniences to let you define the various resources that make up your app kind of like in Ruby on Rails (though a better comparison would be to "micro-frameworks" like [Flask](https://github.com/mitsuhiko/flask) or [Sinatra](https://github.com/sinatra/sinatra)).
+
+####Om
+While Datomic are Compojure are fairly stable, [Om](https://github.com/swannodette/om) is really hot-off-the-press (as of January, 2014). However, it has already garnered a great deal of praise from the internet, which is hardly ever wrong. It is based on Facebook's React library, which, compared to many front-end frameworks, generally limits itself to binding data to the DOM. This fits well with the Clojure philosophy of small libraries and data-orientation. You can read more about why Om's author thinks it's cool [here](http://swannodette.github.io/2013/12/17/the-future-of-javascript-mvcs/).
 
 ##Quickstart with Datomic Free/Starter
-(coming soon)
+Datomic has a number of editions, offers a number of language interfaces, and supports a number of storage back-ends, so its documentation can be a little overwhelming. However, you can get started with a basic setup by:
+
+* [Getting Datomic](http://www.datomic.com/get-datomic.html) (there are a couple of free options&mdash;this project is setup to use the "free" version)
+* Running `bin/transactor config/samples/free-transactor-template.properties` (this works fine as of version 0.9.4384)
 
 ##Building and Running
-(Quickie version, more detail to come...)
+Working with this version of the DACOM stack is a little more cumbersome than it ideally should be, mainly do to a lack of front-end oriented tools in the [Leiningen](http://leiningen.org) ecosystem. There are a few such tools out there, but they are generally simple shell-based wrappers around NodeJS-based tools, so I have instead simply included some convenience tasks to invoke those tools through Leiningen without additional plugins.
 
 ####Prerequisites
 * [Datomic](http://datomic.com) (any edition)
@@ -29,7 +41,7 @@ especially welcome.
 * [Cerebellum](http://en.wikipedia.org/wiki/Cerebellum)
 
 ####Install and Run
-* Datomic: With a Datomic transactor up and running with local storage (free/dev protocol), run `lein install-db`
+* Datomic: With a Datomic transactor up and running with local storage (free/dev protocol&mdash;see above), run `lein install-db`
   (in the command line) to install the schema and some data
 * Compojure: Run `lein run-server` to run the Ring (and Compojure) server, which provides the web service backend
 * Om: Run `lein run-client` to assemble the static assets, including the Om front-end app and start a static web
