@@ -1,5 +1,5 @@
 {
-  "name": "dcom",
+  "name": "dacom",
   "dependencies": {
     "bootstrap": "3.0.3",
     "react": "0.8.0"

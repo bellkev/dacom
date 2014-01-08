@@ -1,10 +1,10 @@
-DCOM
+DACOM
 ====
 
 The Clojure community is all about libraries that do one thing and do it well, and justifiably so.
 However, it can be especially useful for newcomers to the community to see a more "horizontal" cross-section
-of what's out there. To that end, DCOM ([**D**atomic](http://datomic.com),
-[**C**ompojure](https://github.com/weavejester/compojure), and [**Om**](https://github.com/swannodette/om)) is a
+of what's out there. To that end, the DACOM ([**Da**tomic](http://datomic.com),
+[**C**ompojure](https://github.com/weavejester/compojure), and [**Om**](https://github.com/swannodette/om)) stack is a
 whirlwind tour of what I see as some of the most exciting pieces of the Clojure(Script) ecosystem in one rich webapp.
 I still have plenty to learn about the world of Clojure, so I welcome feedback and contributions from all.
 

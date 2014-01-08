@@ -1,4 +1,4 @@
-{:dcom/all
+{:dacom/all
  {:txes
   [[{:db/id #db/id [:db.part/db]
       :db/ident :demo/message

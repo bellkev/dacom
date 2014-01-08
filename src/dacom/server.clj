@@ -1,13 +1,13 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(ns dcom.server
+(ns dacom.server
   (:require [ring.middleware.cors :as cors]
             [ring.middleware.format :refer [wrap-restful-format]]
             [compojure.response :as response]
             [datomic.api :as d :refer [db q]]
             [compojure.core :refer [GET defroutes]]
-            [dcom.config :refer [read-config]]))
+            [dacom.config :refer [read-config]]))
 
 (def conn
   (d/connect (:datomic-uri (read-config))))

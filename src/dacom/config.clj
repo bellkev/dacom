@@ -1,7 +1,7 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(ns dcom.config
+(ns dacom.config
   (:require [clojure.java.io :as io])
   (:import (java.io FileNotFoundException PushbackReader)))
 

@@ -1,13 +1,13 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(ns dcom.db
+(ns dacom.db
   "https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/io.clj
    and
    https://github.com/Datomic/day-of-datomic/blob/master/src/datomic/samples/schema.clj"
   (:require [datomic.api :as d :refer [db q]]
             [clojure.java.io :as io]
-            [dcom.config :refer [read-config]])
+            [dacom.config :refer [read-config]])
   (:import datomic.Util))
 
 ;===============================================================================
@@ -120,7 +120,7 @@
 (def schema-map (first (read-all "db-resources/schema.edn")))
 
 (defn install-schema []
-  (ensure-schemas conn :dcom/all-tx-tag schema-map :dcom/all))
+  (ensure-schemas conn :dacom/all-tx-tag schema-map :dacom/all))
 
 (defn install-message []
   (let [result (q '[:find ?e :where [?e :demo/message]] (db conn))]

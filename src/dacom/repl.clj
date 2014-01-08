@@ -1,7 +1,7 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(ns dcom.repl
+(ns dacom.repl
   (:require [cemerick.austin.repls :refer (browser-connected-repl-js)]
             [compojure.route :refer (resources)]
             [compojure.core :refer (GET defroutes)]

@@ -6,9 +6,9 @@
    "static/css/style.css"
    "--include-path=bower_components/bootstrap/less/"])
 
-(defproject dcom "0.1.0-SNAPSHOT"
+(defproject dacom "0.1.0-SNAPSHOT"
   :description "A skeleton app built with datomic, compojure, and om"
-  :url "https://github.com/bellkev/dcom"
+  :url "https://github.com/bellkev/dacom"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-2138"]
                  [ring "1.2.1"]
@@ -30,25 +30,25 @@
   :source-paths ["src"]
   :target-path "target/%s/"
   :omit-source true
-  :uberjar-exclusions [#"src/dcom/repl.clj" #"src/dcom/client.cljs" #"src/dcom/db.clj"
-                       #"src/dcom/resources/.*"]
+  :uberjar-exclusions [#"src/dacom/repl.clj" #"src/dacom/client.cljs" #"src/dacom/db.clj"
+                       #"src/dacom/resources/.*"]
   :cljsbuild {:builds {:dev {:source-paths ["src"]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
                                         :optimizations :none
                                         :pretty-print true
                                         :source-map true}}}}
-  :ring {:handler dcom.server/app}
+  :ring {:handler dacom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
-  :profiles {:dev {:repl-options {:init-ns dcom.repl}
+  :profiles {:dev {:repl-options {:init-ns dacom.repl}
                    :resource {:resource-paths ["pages"]
                               :target-path "static"
                               :extra-values {:scripts [{:src "../bower_components/react/react.js"}
                                                        {:src "js/goog/base.js"}
                                                        {:src "js/main.js"}
-                                                       {:body "goog.require('dcom.client')"}]}}}
-             :db {:main dcom.db}
+                                                       {:body "goog.require('dacom.client')"}]}}}
+             :db {:main dacom.db}
              :uberjar {:aot :all}}
   :aliases {"bower" ["shell" "bower" "install"]
             "less-debug" ~(conj less-cmd "--source-map")
