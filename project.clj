@@ -31,6 +31,7 @@
   :target-path "target/%s/"
   :omit-source true
   :uberjar-exclusions [#".*\.cljs"]
+  :resource {:resource-paths ["web-resources/images"]}
   :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src"]
                              :exclusions [dacom.repl]
                              :compiler {:output-to "static/js/main.js"

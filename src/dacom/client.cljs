@@ -26,6 +26,10 @@
           (str (:compojure-message (<! server-chan)) ", and Om!"))))
     om/IRender
     (render [_]
-      (html [:p (om/get-state owner :om-message)]))))
+      (html [:div.message
+             [:div.container
+              [:h1 (om/get-state owner :om-message)]
+              [:p (str "If you can read the message above, then you have successfully "
+                       "launched your brand-new DACOM-based webapp.")]]]))))
 
 (om/root {} widget (.getElementById js/document "app"))
