@@ -1,9 +1,6 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(def less-cmd
-  )
-
 (defproject dacom "0.1.0-SNAPSHOT"
   :description "A skeleton app built with datomic, compojure, and om"
   :url "https://github.com/bellkev/dacom"
@@ -19,15 +16,14 @@
                  [sablono "0.1.5"]
                  [com.datomic/datomic-free "0.9.4384"]]
   :plugins [[lein-cljsbuild "1.0.1-SNAPSHOT"]
-            [com.cemerick/austin "0.1.4-SNAPSHOT"]
             [lein-ring "0.8.8"]
             [lein-resource "0.3.1"]
             [lein-httpd "1.0.0"]
             [lein-shell "0.3.0"]
-            [fsrun "0.1.2"]]
+            [fsrun "0.1.2"]
+            [com.cemerick/austin "0.1.4-SNAPSHOT"]]
   :source-paths ["src"]
-  :target-path "target/%s/"
-  :omit-source true
+  :target-path "target/"
   :uberjar-exclusions [#".*\.cljs"]
   :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src"]
                              :compiler {:output-to "static/js/main.js"
@@ -37,11 +33,11 @@
                                         :source-map true}}
                        :prod {:source-paths ["src"]
                               :compiler {:output-to "dist/static/js/main.js"
-                                          :optimizations :advanced
-                                          :pretty-print false
-                                          ;; From Om jar
-                                          :preamble ["react/react.min.js"]
-                                          :externs ["react/externs/react.js"]}}}}
+                                         :optimizations :advanced
+                                         :pretty-print false
+                                         ;; From Om jar
+                                         :preamble ["react/react.min.js"]
+                                         :externs ["react/externs/react.js"]}}}}
   :ring {:handler dacom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
@@ -55,8 +51,8 @@
                                                        {:body "goog.require('dacom.client')"}
                                                        {:body "goog.require('dacom.repl')"}]}}}
              :db {:main dacom.db}
-             :uberjar {:aot :all}
-             :prod {:resource {:resource-paths ["web-resources/pages"]
+             :prod {:target-path "dist/server/"
+                    :resource {:resource-paths ["web-resources/pages"]
                                :target-path "dist/static"
                                :extra-values {:scripts [{:src "js/main.js"}]}}}}
   :aliases {"bower" ["shell" "bower" "install"]
@@ -67,5 +63,7 @@
             "watch-less" ["fschange" "web-resources/stylesheets/*" "less-debug"]
             "install-db" ["with-profile" "db" "run"]
             "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
-            "run-server" ["ring" "server-headless"]}
-  :clean-targets [:target-path :compile-path "static"])
+            "run-server" ["ring" "server-headless"]
+            "dist" ["with-profile" "prod" "do" "ring" "uberjar," "cljsbuild" "once" "prod," "less-prod,"
+                    "resource"]}
+  :clean-targets [:target-path :compile-path "static" "dist"])
