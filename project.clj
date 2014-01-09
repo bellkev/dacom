@@ -2,7 +2,7 @@
 ;   See the file license.txt for copying permission.
 
 (def less-cmd
-  ["shell" "lessc" "stylesheets/style.less"
+  ["shell" "lessc" "web-resources/stylesheets/style.less"
    "static/css/style.css"
    "--include-path=bower_components/bootstrap/less/"])
 
@@ -30,8 +30,8 @@
   :source-paths ["src"]
   :target-path "target/%s/"
   :omit-source true
-  :uberjar-exclusions [#".*\.cljs" #"src/dacom/db\.clj"]
-  :cljsbuild {:builds {:dev {:source-paths ["src" "repl/src"]
+  :uberjar-exclusions [#".*\.cljs"]
+  :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src"]
                              :exclusions [dacom.repl]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
@@ -41,9 +41,9 @@
   :ring {:handler dacom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
-  :profiles {:dev {:source-paths ["src" "repl/src"]
+  :profiles {:dev {:source-paths ["utils/src"]
                    :repl-options {:init-ns dacom.repl}
-                   :resource {:resource-paths ["pages"]
+                   :resource {:resource-paths ["web-resources/pages"]
                               :target-path "static"
                               :extra-values {:scripts [{:src "../bower_components/react/react.js"}
                                                        {:src "js/goog/base.js"}
@@ -55,7 +55,7 @@
   :aliases {"bower" ["shell" "bower" "install"]
             "less-debug" ~(conj less-cmd "--source-map")
             "less-prod" ~(conj less-cmd "--compress")
-            "watch-less" ["fschange" "stylesheets/*" "less-debug"]
+            "watch-less" ["fschange" "web-resources/stylesheets/*" "less-debug"]
             "install-db" ["with-profile" "db" "run"]
             "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
             "run-server" ["ring" "server-headless"]}
