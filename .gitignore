@@ -2,8 +2,9 @@
 /.nrepl-port
 /.repl/
 .DS_STORE
-/.idea
+/.idea/
 *.iml
-/static
-/target
-/bower_components
+/static/
+/target/
+/bower_components/
+/dist/
