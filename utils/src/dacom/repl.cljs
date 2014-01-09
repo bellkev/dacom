@@ -1,3 +1,6 @@
+;   Copyright (c) 2014 Kevin Bell. All rights reserved.
+;   See the file license.txt for copying permission.
+
 (ns dacom.repl
   (:require [ajax.core :as ajax]
             [clojure.browser.repl]))

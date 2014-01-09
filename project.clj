@@ -2,9 +2,7 @@
 ;   See the file license.txt for copying permission.
 
 (def less-cmd
-  ["shell" "lessc" "web-resources/stylesheets/style.less"
-   "static/css/style.css"
-   "--include-path=bower_components/bootstrap/less/"])
+  )
 
 (defproject dacom "0.1.0-SNAPSHOT"
   :description "A skeleton app built with datomic, compojure, and om"
@@ -31,14 +29,19 @@
   :target-path "target/%s/"
   :omit-source true
   :uberjar-exclusions [#".*\.cljs"]
-  :resource {:resource-paths ["web-resources/images"]}
   :cljsbuild {:builds {:dev {:source-paths ["utils/src" "src"]
-                             :exclusions [dacom.repl]
                              :compiler {:output-to "static/js/main.js"
                                         :output-dir "static/js"
                                         :optimizations :none
                                         :pretty-print true
-                                        :source-map true}}}}
+                                        :source-map true}}
+                       :prod {:source-paths ["src"]
+                              :compiler {:output-to "dist/static/js/main.js"
+                                          :optimizations :advanced
+                                          :pretty-print false
+                                          ;; From Om jar
+                                          :preamble ["react/react.min.js"]
+                                          :externs ["react/externs/react.js"]}}}}
   :ring {:handler dacom.server/app}
   :lesscss-paths "stylesheets"
   :lesscss-output-path "static/css"
@@ -52,10 +55,15 @@
                                                        {:body "goog.require('dacom.client')"}
                                                        {:body "goog.require('dacom.repl')"}]}}}
              :db {:main dacom.db}
-             :uberjar {:aot :all}}
+             :uberjar {:aot :all}
+             :prod {:resource {:resource-paths ["web-resources/pages"]
+                               :target-path "dist/static"
+                               :extra-values {:scripts [{:src "js/main.js"}]}}}}
   :aliases {"bower" ["shell" "bower" "install"]
-            "less-debug" ~(conj less-cmd "--source-map")
-            "less-prod" ~(conj less-cmd "--compress")
+            "less-debug" ["shell" "lessc" "web-resources/stylesheets/style.less" "static/css/style.css"
+                          "--include-path=bower_components/bootstrap/less/" "--source-map"]
+            "less-prod" ["shell" "lessc" "web-resources/stylesheets/style.less" "dist/static/css/style.css"
+                         "--include-path=bower_components/bootstrap/less/" "--compress"]
             "watch-less" ["fschange" "web-resources/stylesheets/*" "less-debug"]
             "install-db" ["with-profile" "db" "run"]
             "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
