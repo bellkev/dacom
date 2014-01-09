@@ -39,8 +39,6 @@
                                          :preamble ["react/react.min.js"]
                                          :externs ["react/externs/react.js"]}}}}
   :ring {:handler dacom.server/app}
-  :lesscss-paths "stylesheets"
-  :lesscss-output-path "static/css"
   :profiles {:dev {:source-paths ["utils/src"]
                    :repl-options {:init-ns dacom.repl}
                    :resource {:resource-paths ["web-resources/pages"]
