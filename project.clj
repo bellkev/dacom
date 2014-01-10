@@ -39,16 +39,17 @@
                                          :externs ["react/externs/react.js"]}}}}
   :ring {:init dacom.server/init-conn
          :handler dacom.server/app}
-  :profiles {:dev {:plugins [[com.cemerick/austin "0.1.4-SNAPSHOT"]]
-                   :source-paths ["utils/src"]
-                   :repl-options {:init-ns dacom.repl}
-                   :resource {:resource-paths ["web-resources/pages"]
-                              :target-path "static"
-                              :extra-values {:scripts [{:src "../bower_components/react/react.js"}
-                                                       {:src "js/goog/base.js"}
-                                                       {:src "js/main.js"}
-                                                       {:body "goog.require('dacom.client')"}
-                                                       {:body "goog.require('dacom.repl')"}]}}}
+  :profiles {:dev {;; This needs to be here because of https://github.com/cemerick/austin/issues/23
+                    :plugins [[com.cemerick/austin "0.1.4-SNAPSHOT"]]
+                    :source-paths ["utils/src"]
+                    :repl-options {:init-ns dacom.repl}
+                    :resource {:resource-paths ["web-resources/pages"]
+                               :target-path "static"
+                               :extra-values {:scripts [{:src "../bower_components/react/react.js"}
+                                                        {:src "js/goog/base.js"}
+                                                        {:src "js/main.js"}
+                                                        {:body "goog.require('dacom.client')"}
+                                                        {:body "goog.require('dacom.repl')"}]}}}
              :db {:main dacom.db}
              :prod {:main dacom.server
                     :target-path "dist/server/"
@@ -64,8 +65,8 @@
                          "--include-path=bower_components/bootstrap/less/" "--compress"]
             "watch-less" ["fschange" "web-resources/stylesheets/*" "less-debug"]
             "install-db" ["with-profile" "db" "run"]
-            "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
+            "run-client" ["do" "bower," "cljsbuild" "once" "dev," "less-debug," "resource," "httpd" "8000"]
             "run-server" ["ring" "server-headless"]
-            "dist" ["with-profile" "prod" "do" "uberjar," "cljsbuild" "once" "prod," "less-prod,"
+            "dist" ["with-profile" "prod" "do" "bower," "uberjar," "cljsbuild" "once" "prod," "less-prod,"
                     "resource"]}
   :clean-targets [:target-path :compile-path "static" "dist"])
