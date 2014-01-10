@@ -20,8 +20,7 @@
             [lein-resource "0.3.1"]
             [lein-httpd "1.0.0"]
             [lein-shell "0.3.0"]
-            [fsrun "0.1.2"]
-            [com.cemerick/austin "0.1.4-SNAPSHOT"]]
+            [fsrun "0.1.2"]]
   :source-paths ["src"]
   :target-path "target/"
   :uberjar-exclusions [#".*\.cljs"]
@@ -38,8 +37,10 @@
                                          ;; From Om jar
                                          :preamble ["react/react.min.js"]
                                          :externs ["react/externs/react.js"]}}}}
-  :ring {:handler dacom.server/app}
-  :profiles {:dev {:source-paths ["utils/src"]
+  :ring {:init dacom.server/init-conn
+         :handler dacom.server/app}
+  :profiles {:dev {:plugins [[com.cemerick/austin "0.1.4-SNAPSHOT"]]
+                   :source-paths ["utils/src"]
                    :repl-options {:init-ns dacom.repl}
                    :resource {:resource-paths ["web-resources/pages"]
                               :target-path "static"
@@ -49,10 +50,13 @@
                                                        {:body "goog.require('dacom.client')"}
                                                        {:body "goog.require('dacom.repl')"}]}}}
              :db {:main dacom.db}
-             :prod {:target-path "dist/server/"
+             :prod {:main dacom.server
+                    :target-path "dist/server/"
                     :resource {:resource-paths ["web-resources/pages"]
                                :target-path "dist/static"
-                               :extra-values {:scripts [{:src "js/main.js"}]}}}}
+                               :extra-values {:scripts [{:src "js/main.js"}]}}}
+             :uberjar {:omit-source true
+                       :aot :all}}
   :aliases {"bower" ["shell" "bower" "install"]
             "less-debug" ["shell" "lessc" "web-resources/stylesheets/style.less" "static/css/style.css"
                           "--include-path=bower_components/bootstrap/less/" "--source-map"]
@@ -62,6 +66,6 @@
             "install-db" ["with-profile" "db" "run"]
             "run-client" ["do" "bower," "cljsbuild" "once," "less-debug," "resource," "httpd" "8000"]
             "run-server" ["ring" "server-headless"]
-            "dist" ["with-profile" "prod" "do" "ring" "uberjar," "cljsbuild" "once" "prod," "less-prod,"
+            "dist" ["with-profile" "prod" "do" "uberjar," "cljsbuild" "once" "prod," "less-prod,"
                     "resource"]}
   :clean-targets [:target-path :compile-path "static" "dist"])
