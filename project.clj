@@ -50,8 +50,7 @@
                                                         {:src "js/main.js"}
                                                         {:body "goog.require('dacom.client')"}
                                                         {:body "goog.require('dacom.repl')"}]}}}
-             :db {:main dacom.db
-                  :source-paths ["utils/src"]}
+             :db [:dev {:main dacom.db}]
              :prod {:main dacom.server
                     :target-path "dist/server/"
                     :resource {:resource-paths ["web-resources/pages"]
