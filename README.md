@@ -12,6 +12,9 @@ Of course, this is just one possible combination of technologies and is definite
 However, any feedback on how to better embody Clojure(Script)/Datomic/Compojure/Om/Leiningen "best practices" are
 especially welcome.
 
+##TLDR
+Clone this repo and screw around, or you can just do `lein new dacom my-app-name`. Skip down a ways for detailed instructions on installing/running.
+
 ##Overview of Technologies Used
 This project uses a wide array of Clojure (and non-Clojure) libraries and tools to "glue" everything together and provide some development conveniences, but the main components of the DACOM (rhymes with "datom") stack are:
 
