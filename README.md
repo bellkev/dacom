@@ -51,7 +51,7 @@ Working with this version of the DACOM stack is a little more cumbersome than it
   server
 
 ###Debug, Hack, and Play!
-* Run `lein cljsbuild auto` to monitor .cljs files for changes and automatically recompile them
+* Run `lein cljsbuild auto dev` to monitor .cljs files for changes and automatically recompile them
 * Run `lein watch-less` to monitor less for changes and recompile
 * Run `lein repl` to start the usual Leiningen/nREPL-based REPL
 * Then, if you want to, type `(browser-repl)` or just `(br)` into the REPL to start an Austin-based browser REPL session. Once you've done that, refresh the webapp and try typing `(js/alert "Hey there!")` from the Clojure REPL
