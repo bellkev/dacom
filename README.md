@@ -48,7 +48,7 @@ Working with this version of the DACOM stack is a little more cumbersome than it
   (in the command line) to install the schema and some data
 * Compojure: Run `lein run-server` to run the Ring (and Compojure) server, which provides the web service backend
 * Om: Run `lein run-client` to assemble the static assets, including the Om front-end app and start a static web
-  server
+  server and load http://localhost:8000/static/index.html in your browser. 
 
 ###Debug, Hack, and Play!
 * Run `lein cljsbuild auto dev` to monitor .cljs files for changes and automatically recompile them
