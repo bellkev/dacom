@@ -1,7 +1,7 @@
 ;   Copyright (c) 2014 Kevin Bell. All rights reserved.
 ;   See the file license.txt for copying permission.
 
-(defproject dacom "0.1.3-SNAPSHOT"
+(defproject dacom "0.1.4"
   :description "A skeleton app built with datomic, compojure, and om"
   :url "https://github.com/bellkev/dacom"
   :dependencies [[org.clojure/clojure "1.6.0"]
