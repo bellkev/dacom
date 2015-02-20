@@ -4,22 +4,22 @@
 (defproject dacom "0.1.3-SNAPSHOT"
   :description "A skeleton app built with datomic, compojure, and om"
   :url "https://github.com/bellkev/dacom"
-  :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-2138"]
-                 [ring "1.2.1"]
-                 [ring-cors "0.1.0"]
-                 [ring-middleware-format "0.3.1"]
-                 [compojure "1.1.6"]
-                 [cljs-ajax "0.2.3"]
+  :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/clojurescript "0.0-2850"]
+                 [ring "1.3.2"]
+                 [ring-cors "0.1.6"]
+                 [ring-middleware-format "0.4.0"]
+                 [compojure "1.3.2"]
+                 [cljs-ajax "0.3.10"]
                  [org.clojure/core.async "0.1.267.0-0d7780-alpha"]
-                 [om "0.1.4"]
-                 [sablono "0.1.5"]
-                 [com.datomic/datomic-free "0.9.4384"]]
-  :plugins [[lein-cljsbuild "1.0.1-SNAPSHOT"]
-            [lein-ring "0.8.8"]
-            [lein-resource "0.3.1"]
+                 [om "0.7.3"]
+                 [sablono "0.3.4"]
+                 [com.datomic/datomic-free "0.9.5130"]]
+  :plugins [[lein-cljsbuild "1.0.5"]
+            [lein-ring "0.9.1"]
+            [lein-resource "14.10.1"]
             [lein-httpd "1.0.0"]
-            [lein-shell "0.3.0"]
+            [lein-shell "0.4.0"]
             [fsrun "0.1.2"]]
   :source-paths ["src"]
   :target-path "target/"
@@ -40,7 +40,7 @@
   :ring {:init dacom.server/init-conn
          :handler dacom.server/app}
   :profiles {:dev {;; This needs to be here because of https://github.com/cemerick/austin/issues/23
-                    :plugins [[com.cemerick/austin "0.1.4-SNAPSHOT"]]
+                    :plugins [[com.cemerick/austin "0.1.6"]]
                     :source-paths ["utils/src"]
                     :repl-options {:init-ns dacom.repl}
                     :resource {:resource-paths ["web-resources/pages"]
